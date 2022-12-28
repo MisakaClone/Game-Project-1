@@ -64,7 +64,7 @@ while not select_Success:
     print('\nSelect your character:')
     num = 1
     for char in charlist:
-        print('\n{}) {} ({}/{})'.format(num, char['name'].name, char['name'].pronouns['pers'], char['name'].pronouns['obj']).ljust(23, ' ') + 'Strengths: {}    Weakness: {}'.format(', '.join(char['strengths']).upper(), char['weakness'].upper()))
+        print(f'\n{num}) {char["name"].name} ({char["name"].pronouns["pers"]}/{char["name"].pronouns["obj"]})'.ljust(23, ' ') + f'Strengths: {", ".join(char["strengths"]).upper()}    Weakness: {char["weakness"].upper()}')
         num += 1
 
     charc = input()
@@ -80,19 +80,14 @@ while not select_Success:
 
                 selected = characters.charvars[int(charc) -1]
 
-                verif = input('''\n{}:\n
-STR: {} {}
-SPD: {} {}
-FOC: {} {}
-RES: {} {}
+                verif = input(f'''\n{selected.name}:\n
+STR: {selected.str} {"".ljust(selected.str,"■")}
+SPD: {selected.spd} {"".ljust(selected.spd,"■")}
+FOC: {selected.foc} {"".ljust(selected.foc,"■")}
+RES: {selected.res} {"".ljust(selected.res,"■")}
 
-Select {}?
-1) Yes     2) No\n'''.format(selected.name,
-                             selected.str, ''.ljust(selected.str,'■'),
-                             selected.spd, ''.ljust(selected.spd,'■'),
-                             selected.foc, ''.ljust(selected.foc,'■'),
-                             selected.res, ''.ljust(selected.res,'■'),
-                             selected.name))
+Select {selected.name}?
+1) Yes     2) No\n''')
                 
                 
                 try:
@@ -114,7 +109,7 @@ Select {}?
     except:
         print('Please choose 1, 2, 3, or 4')
 
-print('\nYou are playing as {}\n\n\n\n\n'.format(charc.name))
+print(f'\nYou are playing as {charc.name}\n\n\n\n\n')
 
 
 
