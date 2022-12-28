@@ -35,7 +35,6 @@ while not verif_Success:
         
         else:
             if int(verif) == 1:
-                charc = Melody
                 verif_Success = True
                 tutorial = True
             elif int(verif) == 2:
