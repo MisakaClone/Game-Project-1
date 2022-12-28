@@ -24,11 +24,11 @@ CONS - Constitution, how healthy you are. Equal to RES + STR\n
 
 # optional tutorial
 
-verif = input('''\nWould you like to see an explanation of combat?
-1) Yes     2) No\n''')
-
 verif_Success = False
 while not verif_Success:
+    verif = input('''\nWould you like to see an explanation of combat?
+1) Yes     2) No\n''')
+    
     try:
         if int(verif) not in [1,2]:
             raise indexError
