@@ -91,6 +91,7 @@ class Enemy:
         self.pronouns = pronouns
         self.stats = stats
         self.feats = feats
+        self.exp = drops['exp']
 
     def death():
         for  item in drops:
@@ -99,15 +100,15 @@ class Enemy:
 
 # enemies
 
-Bear = Enemy('Bear',
+BearStarter = Enemy('Bear',
              {'pers' : 'it',
               'obj' : 'it',
               'adj' : 'its',
               'poss' : 'its',
               'refl' : 'itself'},
-             {'str': 15, 'spd' : 13, 'foc' : 8, 'res' : 13},
+             {'str': 14, 'spd' : 12, 'foc' : 8, 'res' : 13},
              [],
-             [],
+             {'exp' : 20},
              [Intimidate]
              )
              

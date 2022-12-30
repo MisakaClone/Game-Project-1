@@ -95,7 +95,10 @@ However, gaining corruption also gives you feat points, which you can use to unl
 You should always evaluate the risk vs reward of gaining corruption.''')
 
     
-# import character classes and stats from file
+# import character classes and stats from file, as well as items and dice
+
+from dice import *
+import items
 
 import characters
 
@@ -159,15 +162,128 @@ Select {selected.name}?
 
 print(f'\nYou are playing as {charc.name}\n\n\n\n\n')
 
+# setting up combat stats
+
+
+
 maxHP = 10 + charc.res * 3
 currentHP = maxHP
 atkCounterMax = charc.cons * 3
 corruption = 0
+exhaustion = 0
 corruptionPenalty = max(0, 2**((corruption + 70)/140) - 1.45)
 
+level = 1
+exp = [0, ((level + 9)**3)/10]
+
+equip = ['Old Sword']
+equipMax = 1
+
+inventory = ['Old Sword']
+
+#unicode characters
+
+slash = u"\u0336"
+
+#defining function for taking weapon from inventory and equiping it
+
+def equip(name, replace = equip[0]):
+    if len(equipMax) > len(equip):
+        equip.append(name)
+
+    else:
+        pass
 
 
+# num of expores until player arrives at village
+
+villageDistance = 3
 
 
+while villageDistance:
 
+    if villageDistance == 3:
+        print(f'''\nAfter many days of traveling, {charc.name} has finally arrived at the Sylphes Forest.\n
+\n{charc.name}: Just a bit longer and the village will be in sight!\n''')
 
+    elif villageDistance == 2:
+        pass
+
+    else:
+        pass
+    
+    choice = input(f'''Distance to village : {villageDistance}\n
+Exhaustion: {exhaustion}
+Current Health: {currentHP} / {maxHP}
+
+1) keep exploring\n
+2) inventory\n
+3) stats\n
+4) {"".join(["{}{}".format(slash,c) for c in "rest"]) + "(requires 50+ exhaustion)" if exhaustion < 50 else "rest"}''')
+
+    try:
+        if int(choice) == 4 and exhaustion >= 50:
+            pass
+            
+        if int(choice) == 3:
+            pass
+
+        elif int(choice) == 2:
+            itemCount = 0
+            pageCount = 0
+            printList = []
+            for i in inventory:
+                itemCount += 1
+                pageCount += 1
+                item = items.iSeek(i)
+                string = f'{pageCount}) {item.name} - {item.effects}'
+                printList.append(string)
+                if pageCount == 5:
+                    pageCount = 0
+            page = 1
+            while True:
+                print(f'\nInventory ({itemCount} items):\nPage {page} of {(itemCount - 1)//5 + 1}\n')
+                print('\n'.join(printList[5*(page - 1) : min(itemCount, 5*page)]) + '\n')
+                if itemCount > 5 * page:
+                    print('\n7) Next page')
+                if page > 1:
+                    print('\n8) Previous page')
+                choice = input('''\n9) Go back\n
+Choose an item to get more information about it.\n''')
+
+                
+                try:
+                    if int(choice) + 5*(page - 1) in range(5*(page - 1), min(itemCount, 5*page) + 1):
+                        item = items.iSeek(inventory[5*page + int(choice) - 6])
+                        input(f'''\n{item.name}:
+{item.description}
+{item.effects}
+
+Value: {item.value}\n''')
+                    elif int(choice) == 7 and itemCount > 5 * page:
+                        page += 1
+                    elif int(choice) == 8 and page > 1:
+                        page -= 1
+                    elif int(choice) == 9:
+                        break
+                    else:
+                        raise indexError
+                    
+                except:
+                    print('Please choose a valid option\n')
+                
+        elif int(choice) == 1:
+            input('Kay explores deeper into the forest. +5 exhaustion')
+            exhaustion += 5
+
+            print('A Bear jumps out of the foliage!')
+            
+
+            enemy = BearStarter
+
+            while True:
+                pass
+        else:
+            raise indexError
+    except:
+        print('Please choose a valid option\n')
